@@ -41,6 +41,37 @@
                 transform: translateY(0) rotate(0);
             }
         }
+
+
+
+        #menu-overlay.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#menu.show {
+    transform: translateX(0);
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 w-full">
@@ -50,17 +81,27 @@
         <img src="./assets/images/css3.png" alt="Logo CSS" style="top: 66%; left: 8%;">
         <img src="./assets/images/js.png" alt="Logo JS" class="absolute" style="top: 30%; left: 70%;">
     </div>
-    
+
     <!-- Header -->
     <header class="bg-gray-900 text-white p-4 shadow-md w-full">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-xl font-bold">Thawan Santos</h1>
             <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="#about" class="hover:underline">Sobre</a></li>
-                    <li><a href="#projects" class="hover:underline">Projetos</a></li>
-                    <li><a href="#contact" class="hover:underline">Contato</a></li>
+                <!-- Botão do menu em telas menores -->
+                <button id="menu-btn" class="text-2xl focus:outline-none md:hidden">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Overlay para o fundo preto transparente -->
+                <div id="menu-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+                <!-- Menu atualizado -->
+                <ul id="menu" class="hidden fixed top-0 right-0 w-2/3 h-full bg-gray-900 text-white flex flex-col items-center justify-center space-y-6 z-50 md:relative md:w-auto md:flex md:flex-row md:bg-transparent md:space-y-0 md:space-x-4">
+                    <li><a href="#about" class="hover:underline text-xl md:text-base">Sobre</a></li>
+                    <li><a href="#projects" class="hover:underline text-xl md:text-base">Projetos</a></li>
+                    <li><a href="#contact" class="hover:underline text-xl md:text-base">Contato</a></li>
                 </ul>
+
             </nav>
         </div>
     </header>
@@ -81,7 +122,7 @@
         <section id="about" class="py-20 w-full">
             <div class="container mx-auto text-center">
                 <h3 class="text-2xl font-bold mb-4">Sobre Mim</h3>
-                <p class="text-gray-700">Um desenvolvedor frontend em formação apaixonado por tecnologia.</p>
+                <p class="text-gray-700">Sou um desenvolvedor frontend em formação e apaixonado por tecnologia.</p>
                     <br>
                 <p class="text-gray-700">Estou sempre me desafiando com novos projetos e buscando feedback na comunidade de programação, além de compartilhar meus conhecimentos. 😁</p>
                     <br>
@@ -110,8 +151,6 @@
                         </div>
                         <a href="https://thawansantos2.github.io/calculadora-basica/" class="block mt-4 text-blue-500 hover:underline">Acesse aqui</a>
                     </div>
-
-                    
                     <!-- Add more projects here -->
                     <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition w-full">
                         <img src="./assets/images/conversor.png" alt="Imagem do Projeto" class="w-full h-48 object-cover rounded-t-lg">
@@ -126,7 +165,7 @@
                         </div>
                         <a href="https://thawansantos2.github.io/conversor-de-moedas/" class="block mt-4 text-blue-500 hover:underline">Acesse aqui</a>
                     </div>
-
+                    
                     <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition w-full">
                         <img src="./assets/images/jogodavelha.png" alt="Imagem do Projeto" class="w-full h-48 object-cover rounded-t-lg">
                         <h4 class="text-xl font-bold mt-4">Jogo da Velha</h4>
@@ -139,9 +178,9 @@
                             <span class="inline-block bg-yellow-500 text-white text-sm px-2 py-1 rounded">JavaScript</span>
 
                         </div>
-                        <a href="https://thawansantos2.github.io/jogo-da-velha/" class="block mt-4 text-blue-500 hover:underline">Acesse aqui</a>
+                        <a href="https://thawansantos2.github.io/calculadora-basica/" class="block mt-4 text-blue-500 hover:underline">Acesse aqui</a>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
@@ -168,6 +207,41 @@
             </div>
         </div>
     </footer>
+
+
+<script>
+    const menuBtn = document.getElementById("menu-btn");
+    const menu = document.getElementById("menu");
+    const overlay = document.getElementById("menu-overlay");
+    const menuLinks = document.querySelectorAll("#menu a"); // Seleciona todos os links do menu
+
+    // Função para abrir ou fechar o menu
+    const toggleMenu = () => {
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("show");
+        overlay.classList.toggle("hidden");
+        overlay.classList.toggle("show");
+    };
+
+    // Função para fechar o menu
+    const closeMenu = () => {
+        menu.classList.add("hidden");
+        menu.classList.remove("show");
+        overlay.classList.add("hidden");
+        overlay.classList.remove("show");
+    };
+
+    // Abre/fecha o menu ao clicar no botão
+    menuBtn.addEventListener("click", toggleMenu);
+
+    // Fecha o menu ao clicar no overlay
+    overlay.addEventListener("click", closeMenu);
+
+    // Fecha o menu ao clicar em qualquer link
+    menuLinks.forEach(link => {
+        link.addEventListener("click", closeMenu);
+    });
+</script>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
